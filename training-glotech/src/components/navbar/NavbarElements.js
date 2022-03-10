@@ -6,8 +6,8 @@ export const Nav = styled.nav`
   background: #fff;
   height: 80px;
   display: flex;
-  justify-content: space-between;
-  padding: 0.5rem calc((100vw - 1000px) / 2);
+  justify-content: flex-start;
+  padding: 0.5rem;
   z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
@@ -45,7 +45,8 @@ export const Bars = styled(FaBars)`
 
 export const NavMenu = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
+  /* align-items: center; */
   margin-right: -24px;
   @media screen and (max-width: 768px) {
     display: none;
@@ -56,6 +57,8 @@ export const NavBtn = styled.nav`
   display: flex;
   align-items: center;
   margin-right: 24px;
+  justify-content: flex-end;
+  width: 100vw;
   @media screen and (max-width: 768px) {
     display: none;
   }
