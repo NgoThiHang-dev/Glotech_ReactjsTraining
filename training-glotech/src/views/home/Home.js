@@ -42,6 +42,7 @@ const rows = [
 ];
 
 const Home = () => {
+  
   return (
     <div>
       <div id="content-wrapper">
