@@ -1,8 +1,12 @@
 import React from 'react'
-
+import Switch from '@mui/material/Switch';
 const Employees = () => {
   return (
-    <div>Employees</div>
+    <div>
+    Employees
+    <Switch />
+    </div>
+    
   )
 }
 

@@ -1,13 +1,13 @@
 import * as React from "react";
 import "../../assets/css/style.css";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { DataGrid } from "@mui/x-data-grid";
-
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "firstName", headerName: "First name", width: 130 },
@@ -16,7 +16,7 @@ const columns = [
     field: "age",
     headerName: "Age",
     type: "number",
-    width: 90,
+    width: 90
   },
   {
     field: "fullName",
@@ -25,8 +25,8 @@ const columns = [
     sortable: false,
     width: 160,
     valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  },
+      `${params.row.firstName || ""} ${params.row.lastName || ""}`
+  }
 ];
 
 const rows = [
@@ -38,35 +38,29 @@ const rows = [
   { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
   { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
   { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 }
 ];
 
 const Home = () => {
-  
   return (
     <div>
       <div id="content-wrapper">
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Employee Manager
-            </Typography>
-          </Container>
-        </Box>
         <Container maxWidth="xl">
-          <div style={{ height: 400, width: "100%" }}>
+          <Grid container style={{ paddingTop: "5px" }}>
+            <Grid item xs={10}>
+              <h4>Table List Employees</h4>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="contained"
+                endIcon={<AddCircleIcon />}
+                style={{ float: "right" }}
+              >
+                Add
+              </Button>
+            </Grid>
+          </Grid>
+          <div style={{ height: 360, width: "100%" }}>
             <DataGrid
               rows={rows}
               columns={columns}
@@ -77,6 +71,7 @@ const Home = () => {
           </div>
         </Container>
       </div>
+      
     </div>
   );
 };

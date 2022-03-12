@@ -5,8 +5,8 @@ const Footer = () => {
   return (
     <div>
       <footer>
-        <div class="mui-container mui--text-center">
-          Made with ♥ by <a href="https://www.muicss.com">MUICSS</a>
+        <div>
+          React Training by <a href="https://www.glotechvn.com">Glotech JSC</a>
         </div>
       </footer>
     </div>
