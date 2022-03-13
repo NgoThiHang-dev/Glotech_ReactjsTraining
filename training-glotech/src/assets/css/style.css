@@ -9,14 +9,6 @@ body {
 }
 
 
-#content-wrapper {
-  margin: 20px auto;
-  width: 90%;
-  min-height: 100%;
-  padding: 10px;
-  background-color: #fff;
-}
-
 footer {
   box-sizing: border-box;
   height: 100px;

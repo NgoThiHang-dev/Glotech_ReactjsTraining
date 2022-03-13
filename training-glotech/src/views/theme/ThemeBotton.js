@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import IconButton from '@mui/material/IconButton';
+import LightModeIcon from "@mui/icons-material/LightMode";
 import { ThemeContext } from "./ThemeContext";
 
 function ThemeBotton() {
@@ -8,14 +10,13 @@ function ThemeBotton() {
     localStorage.setItem("darkMode", !darkMode);
   };
   return (
-    <button
-      className={
-        darkMode
-          ? "btn btn-floating fa fa-toggle-on"
-          : "btn btn-floating fa fa-toggle-off"
-      }
-      onClick={handleTheme}
-    ></button>
+    <div>
+      <IconButton
+        className="darkMode"
+        onClick={handleTheme}>
+        <LightModeIcon />
+      </IconButton>
+    </div>
   );
 }
 

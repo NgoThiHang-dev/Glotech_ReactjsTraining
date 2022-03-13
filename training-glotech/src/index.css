@@ -19,55 +19,34 @@ code {
   background-color: whitesmoke;
   padding-bottom: 20px;
 }
+
 .canvas-dark {
   background-color: rgb(58, 58, 58);
-  padding-bottom: 20px;
 }
-
 
 .overlay {
   background-color: rgba(53, 53, 53, 0.726);
   align-items: center;
   color: white;
 }
+
 .overlay-dark {
   background-color: rgba(17, 17, 17, 0.719);
   align-items: center;
   color: white;
 }
+
 .about-details {
   background-color: white;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 20px 0px;
   max-width: 80%;
 }
+
 .about-details-dark {
   background-color: rgb(51, 51, 51);
   color: white;
-  padding: 20px;
+  padding: 20px 0px;
   border-radius: 5px;
   max-width: 80%;
-}
-
-.fa {
-  font-size: 20px;
-  margin-left: 15px;
-}
-
-img {
-  width: 200px;
-  margin-bottom: 15px;
-  border-radius: 50%;
-}
-
-.btn-floating {
-  position: fixed;
-  bottom: 15px;
-  right: 25px;
-  background-color: black;
-  color: white;
-  border-radius: 50%;
-}
-.btn-floating:hover {
-  background-color: black;
-  color: white;
 }
