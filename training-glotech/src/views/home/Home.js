@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import "../../assets/css/style.css";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -28,6 +28,13 @@ import axios from "axios";
 import { useContext } from "react";
 import { ThemeContext } from "../../views/theme/ThemeContext";
 
+import { Link } from "react-router-dom";
+import Popup from "reactjs-popup";
+import Content from "../popup/Content";
+
+const baseURL =
+  "https://crudcrud.com/api/bf942a469574489584899ce8728e44a3/employees/";
+
 const Home = () => {
   const { darkMode } = useContext(ThemeContext);
 
@@ -41,120 +48,118 @@ const Home = () => {
     setOpen(false);
   };
 
-  const [employees, setEmployees] = React.useState(null);
+  const [employees, setEmployees] = React.useState([]);
+
+  const [post, setPost] = React.useState(null);
+
+  const [items, setItems] = useState([]);
+
+  //get all
+
+  const getEmployees = async () => {
+    await axios.get(baseURL).then((response) => {
+      setEmployees(response.data);
+    });
+  };
 
   React.useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/1`)
-      .then((response) => {
-        setEmployees(response.data);
-      });
+    getEmployees();
   }, []);
 
+  console.log(employees);
   if (!employees) return null;
 
   return (
     <Container
       maxWidth="xl"
-      className={darkMode ? "about-details-dark" : "about-details"} sx={{ minHeight: 500}}
+      className={darkMode ? "about-details-dark" : "about-details"}
+      sx={{ minHeight: 500 }}
     >
       <Grid container>
         <Grid item xs={10}>
           <h4>Table List Employees</h4>
         </Grid>
         <Grid item xs={2}>
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            style={{ float: "right" }}
-            onClick={handleClickOpen}
+          <Popup
+            modal
+            trigger={
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon />}
+                style={{ float: "right" }}
+              >
+                Add new
+              </Button>
+            }
           >
-            Add new
-          </Button>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Employees Form</DialogTitle>
-            <DialogContent dividers>
-              <DialogContentText>
-                Please enter the information below!
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Name"
-                type="text"
-                fullWidth
-                variant="standard"
-              />
-              <TextField
-                id="date"
-                type="date"
-                variant="standard"
-                fullWidth
-                style={{ paddingTop: "15px" }}
-              />
-              <TextField
-                margin="dense"
-                id="address"
-                label="Address"
-                type="text"
-                fullWidth
-                variant="standard"
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleClose}>Submit</Button>
-            </DialogActions>
-          </Dialog>
+            {(close) => <Content getEmployees={getEmployees} close={close} />}
+          </Popup>
         </Grid>
       </Grid>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650}} aria-label="simple table">
+      <TableContainer component={Paper} sx={{ minHeight: 600 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell align="right">Day of birth</TableCell>
-              <TableCell align="right">Address</TableCell>
+              <TableCell align="center">Day of birth</TableCell>
+              <TableCell align="left">Address</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-          
-          {/* {employees.map(employees => (
+            {employees.map((employees) => (
+              <TableRow key={employees.id}>
+                <TableCell component="th" scope="row">
+                  {employees.name}
+                </TableCell>
+                <TableCell align="center">{employees.day_of_birth}</TableCell>
+                <TableCell align="left">{employees.address}</TableCell>
+                <TableCell align="right">
+                  <Button
+                    size="small"
+                    style={{ backgroundColor: "#d8f3dc", marginRight: "5px" }}
+                  >
+                    <PriorityHighIcon style={{ color: "#2d6a4f" }} />
+                  </Button>
+                  <Button
+                    size="small"
+                    style={{ backgroundColor: "#E2E3F3", marginRight: "5px" }}
+                  >
+                    <EditIcon style={{ color: "#333996" }} />
+                  </Button>
+                  <Button
+                    size="small"
+                    style={{ backgroundColor: "#FEE0E3" }}
+                    onClick={handleClickOpen}
+                    // onClick={() => handleDelete(employees.id)}
+                  >
+                    <DeleteOutlineIcon style={{ color: "#F83245" }} />
+                    {/* {dialog.isLoading && ( */}
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Are you sure you want to delete?"}
+                      </DialogTitle>
 
-            <TableRow
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">{employees.id}</TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right">
-                <Button
-                  size="small"
-                  style={{ backgroundColor:"#d8f3dc", marginRight:"5px" }}
-                >
-                  <PriorityHighIcon style={{ color:"#2d6a4f" }}/>
-                </Button>
-                <Button
-                  size="small"
-                  style={{ backgroundColor:"#E2E3F3", marginRight:"5px" }}
-                >
-                  <EditIcon style={{ color:"#333996" }} />
-                </Button>
-                <Button
-                  size="small"
-                  style={{ backgroundColor:"#FEE0E3" }}
-                >
-                  <DeleteOutlineIcon style={{ color:"#F83245" }} />
-                </Button>
-              </TableCell>
-            </TableRow>
-            ))} */}
+                      <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClose} autoFocus>
+                          OK
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                    {/* )}; */}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
-      
     </Container>
   );
 };
