@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 
 export default ({ close, getEmployees }) => {
-  const baseURL = "https://training.morethanteam.tech/training/employees/";
 
   const [name, setName] = useState("");
   const [day_of_birth, setBirthday] = useState("");
@@ -14,13 +13,10 @@ export default ({ close, getEmployees }) => {
     e.preventDefault();
 
     const data = { name, day_of_birth, address };
-    axios
-      .post("https://training.morethanteam.tech/training/employees/", data)
-      .then((response) => {
+    axios.post("https://training.morethanteam.tech/training/employees/", data).then((response) => {
         console.log(response);
         getEmployees();
-        // console.log(c)
-        // modal.close()
+        
       })
       .catch((error) => {
         if (error.response) {

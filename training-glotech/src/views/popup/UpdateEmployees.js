@@ -10,13 +10,11 @@ export default ({ close, getEmployees, employees }) => {
   const [address, setAddress] = useState("");
   const [data, setData] = useState(null);
 
-  const [startDate, setStartDate] = useState(new Date());
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = { name, day_of_birth, address };
-
     axios
       .put(
         `https://training.morethanteam.tech/training/employees/${employees.id}`,

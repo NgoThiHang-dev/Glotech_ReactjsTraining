@@ -2,27 +2,28 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import DateTimePicker from "react-datetime-picker";
 
 export default ({ close, getEmployees, employees }) => {
-//   const baseURL =
-//     "https://training.morethanteam.tech/training/employees/";
-
   const [name, setName] = useState("");
   const [day_of_birth, setBirthday] = useState("");
   const [address, setAddress] = useState("");
-  
+
   const [data, setData] = useState(null);
-  
+
   React.useEffect(() => {
     const data = { name, day_of_birth, address };
-    axios.get(`https://training.morethanteam.tech/training/employees/${employees.id}`).then((response) => {
+    axios
+      .get(
+        `https://training.morethanteam.tech/training/employees/${employees.id}`
+      )
+      .then((response) => {
         setData(response.data);
         setName("");
         setBirthday("");
         setAddress("");
-    });
+      });
   }, []);
-
 
   return (
     <div>
@@ -45,16 +46,14 @@ export default ({ close, getEmployees, employees }) => {
               onChange={(e) => setName(e.target.value)}
             />
 
-            <p>{employees.name}</p>
-            <TextField
-              id="date"
-              type="date"
-              variant="standard"
-              fullWidth
-              style={{ paddingTop: "15px" }}
-              value={employees.birthday}
-              onChange={(e) => setName(e.target.value)}
+            <DateTimePicker
+              value={employees.day_of_birth}
+              onChange={(e) => setBirthday(e.target.value)}
+              renderInput={(props) => <TextField {...props} />}
+              format="dd MM yyyy"
+              style={{ width: "400px" }}
             />
+
             <TextField
               margin="dense"
               id="address"
@@ -63,7 +62,7 @@ export default ({ close, getEmployees, employees }) => {
               fullWidth
               variant="standard"
               value={employees.address}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
         </div>

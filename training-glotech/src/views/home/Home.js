@@ -30,9 +30,9 @@ import { ThemeContext } from "../../views/theme/ThemeContext";
 
 import { Link } from "react-router-dom";
 import Popup from "reactjs-popup";
-import Content from "../popup/Content";
-import Detail from "../popup/Detail";
-import Update from "../popup/Update";
+import Content from "../popup/AddEmployees";
+import Detail from "../popup/DetailEmployees";
+import Update from "../popup/UpdateEmployees";
 
 const baseURL = "https://training.morethanteam.tech/training/employees/";
 
@@ -43,15 +43,6 @@ const Home = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
-  const [openDialog, setOpenDialog] = React.useState(false);
-
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true);
-  };
-
-  const handleClickCloseDialog = () => {
-    setOpenDialog(false);
   };
 
   const handleClose = () => {
@@ -82,7 +73,7 @@ const Home = () => {
     axios
       .delete(`https://training.morethanteam.tech/training/employees/${id}`)
       .then(() => {
-        alert("Post deleted!");
+        getEmployees();
       });
   }
 
@@ -94,7 +85,7 @@ const Home = () => {
     >
       <Grid container>
         <Grid item xs={10}>
-          <h4>Table List Employees</h4>open
+          <h4>Table List Employees</h4>
         </Grid>
         <Grid item xs={2}>
           <Popup
@@ -184,15 +175,14 @@ const Home = () => {
                     employees={employees}
                     size="small"
                     style={{ backgroundColor: "#FEE0E3" }}
-                    onClick={handleClickOpen}
-                    // onClick={() => handleDelete(employees.id)}
+                    onClick={() => deletePost(employees.id)}
                   >
                     <DeleteOutlineIcon style={{ color: "#F83245" }} />
                   </Button>
                 </TableCell>
               </TableRow>
             ))}
-            <Dialog
+            {/* <Dialog
               open={open}
               onClose={handleClose}
               aria-labelledby="alert-dialog-title"
@@ -208,7 +198,7 @@ const Home = () => {
                   OK
                 </Button>
               </DialogActions>
-            </Dialog>
+            </Dialog> */}
           </TableBody>
         </Table>
       </TableContainer>
