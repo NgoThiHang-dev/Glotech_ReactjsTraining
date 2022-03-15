@@ -44,6 +44,15 @@ const Home = () => {
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClickCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -88,7 +97,7 @@ const Home = () => {
           <h4>Table List Employees</h4>open
         </Grid>
         <Grid item xs={2}>
-          {/* <Popup
+          <Popup
             modal
             trigger={
               <Button
@@ -101,7 +110,7 @@ const Home = () => {
             }
           >
             {(close) => <Content getEmployees={getEmployees} close={close} />}
-          </Popup> */}
+          </Popup>
         </Grid>
       </Grid>
       <TableContainer component={Paper} sx={{ minHeight: 600 }}>
@@ -114,6 +123,7 @@ const Home = () => {
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {employees.map((employees) => (
               <TableRow key={employees.id}>
@@ -123,7 +133,7 @@ const Home = () => {
                 <TableCell align="center">{employees.day_of_birth}</TableCell>
                 <TableCell align="left">{employees.address}</TableCell>
                 <TableCell align="right">
-                  {/* <Popup
+                  <Popup
                     modal
                     trigger={
                       <Button
@@ -168,7 +178,7 @@ const Home = () => {
                         employees={employees}
                       />
                     )}
-                  </Popup> */}
+                  </Popup>
 
                   <Button
                     employees={employees}
@@ -180,25 +190,25 @@ const Home = () => {
                     <DeleteOutlineIcon style={{ color: "#F83245" }} />
                   </Button>
                 </TableCell>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to delete?"}
-                  </DialogTitle>
-
-                  <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={() => deletePost(employees.id)} autoFocus>
-                      OK
-                    </Button>
-                  </DialogActions>
-                </Dialog>
               </TableRow>
             ))}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"Are you sure you want to delete?"}
+              </DialogTitle>
+
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={() => deletePost(employees.id)} autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
           </TableBody>
         </Table>
       </TableContainer>
