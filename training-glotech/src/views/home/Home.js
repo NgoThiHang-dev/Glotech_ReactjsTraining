@@ -31,9 +31,10 @@ import { ThemeContext } from "../../views/theme/ThemeContext";
 import { Link } from "react-router-dom";
 import Popup from "reactjs-popup";
 import Content from "../popup/Content";
+import Detail from "../popup/Detail";
+import Update from "../popup/Update";
 
-const baseURL =
-  "https://crudcrud.com/api/bf942a469574489584899ce8728e44a3/employees/";
+const baseURL = "https://training.morethanteam.tech/training/employees/";
 
 const Home = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -52,13 +53,11 @@ const Home = () => {
 
   const [post, setPost] = React.useState(null);
 
-  const [items, setItems] = useState([]);
-
   //get all
 
   const getEmployees = async () => {
     await axios.get(baseURL).then((response) => {
-      setEmployees(response.data);
+      setEmployees(response.data.result);
     });
   };
 
@@ -66,8 +65,17 @@ const Home = () => {
     getEmployees();
   }, []);
 
-  console.log(employees);
   if (!employees) return null;
+
+  const handleView = () => {};
+
+  function deletePost(id) {
+    axios
+      .delete(`https://training.morethanteam.tech/training/employees/${id}`)
+      .then(() => {
+        alert("Post deleted!");
+      });
+  }
 
   return (
     <Container
@@ -77,10 +85,10 @@ const Home = () => {
     >
       <Grid container>
         <Grid item xs={10}>
-          <h4>Table List Employees</h4>
+          <h4>Table List Employees</h4>open
         </Grid>
         <Grid item xs={2}>
-          <Popup
+          {/* <Popup
             modal
             trigger={
               <Button
@@ -93,7 +101,7 @@ const Home = () => {
             }
           >
             {(close) => <Content getEmployees={getEmployees} close={close} />}
-          </Popup>
+          </Popup> */}
         </Grid>
       </Grid>
       <TableContainer component={Paper} sx={{ minHeight: 600 }}>
@@ -115,46 +123,80 @@ const Home = () => {
                 <TableCell align="center">{employees.day_of_birth}</TableCell>
                 <TableCell align="left">{employees.address}</TableCell>
                 <TableCell align="right">
-                  <Button
-                    size="small"
-                    style={{ backgroundColor: "#d8f3dc", marginRight: "5px" }}
+                  {/* <Popup
+                    modal
+                    trigger={
+                      <Button
+                        size="small"
+                        onClick={handleView}
+                        style={{
+                          backgroundColor: "#d8f3dc",
+                          marginRight: "5px",
+                        }}
+                      >
+                        <PriorityHighIcon style={{ color: "#2d6a4f" }} />
+                      </Button>
+                    }
                   >
-                    <PriorityHighIcon style={{ color: "#2d6a4f" }} />
-                  </Button>
-                  <Button
-                    size="small"
-                    style={{ backgroundColor: "#E2E3F3", marginRight: "5px" }}
+                    {(close) => (
+                      <Detail
+                        getEmployees={getEmployees}
+                        close={close}
+                        employees={employees}
+                      />
+                    )}
+                  </Popup>
+                  <Popup
+                    modal
+                    trigger={
+                      <Button
+                        size="small"
+                        onClick={handleView}
+                        style={{
+                          backgroundColor: "#E2E3F3",
+                          marginRight: "5px",
+                        }}
+                      >
+                        <EditIcon style={{ color: "#333996" }} />
+                      </Button>
+                    }
                   >
-                    <EditIcon style={{ color: "#333996" }} />
-                  </Button>
+                    {(close) => (
+                      <Update
+                        getEmployees={getEmployees}
+                        close={close}
+                        employees={employees}
+                      />
+                    )}
+                  </Popup> */}
+
                   <Button
+                    employees={employees}
                     size="small"
                     style={{ backgroundColor: "#FEE0E3" }}
                     onClick={handleClickOpen}
                     // onClick={() => handleDelete(employees.id)}
                   >
                     <DeleteOutlineIcon style={{ color: "#F83245" }} />
-                    {/* {dialog.isLoading && ( */}
-                    <Dialog
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="alert-dialog-title"
-                      aria-describedby="alert-dialog-description"
-                    >
-                      <DialogTitle id="alert-dialog-title">
-                        {"Are you sure you want to delete?"}
-                      </DialogTitle>
-
-                      <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={handleClose} autoFocus>
-                          OK
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                    {/* )}; */}
                   </Button>
                 </TableCell>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"Are you sure you want to delete?"}
+                  </DialogTitle>
+
+                  <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={() => deletePost(employees.id)} autoFocus>
+                      OK
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </TableRow>
             ))}
           </TableBody>

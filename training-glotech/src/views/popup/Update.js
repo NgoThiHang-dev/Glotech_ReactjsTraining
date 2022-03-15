@@ -2,25 +2,30 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import DateTimePicker from "react-datetime-picker";
 
-export default ({ close, getEmployees }) => {
-  const baseURL = "https://training.morethanteam.tech/training/employees/";
-
+export default ({ close, getEmployees, employees }) => {
   const [name, setName] = useState("");
-  const [day_of_birth, setBirthday] = useState("");
+  const [day_of_birth, setBirthday] = useState(new Date());
   const [address, setAddress] = useState("");
+  const [data, setData] = useState(null);
+
+  const [startDate, setStartDate] = useState(new Date());
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = { name, day_of_birth, address };
+
     axios
-      .post("https://training.morethanteam.tech/training/employees/", data)
+      .put(
+        `https://training.morethanteam.tech/training/employees/${employees.id}`,
+        data
+      )
       .then((response) => {
         console.log(response);
+        setData(response.data);
         getEmployees();
-        // console.log(c)
-        // modal.close()
       })
       .catch((error) => {
         if (error.response) {
@@ -33,16 +38,17 @@ export default ({ close, getEmployees }) => {
         }
       });
   };
-  // React.useEffect(() => {
-  //   setIsOpen(true);
-  // }, []);
 
-  // const dialog = ()=>{
-  //   setIsOpen(false)
-  // }
+  //   const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+
+  React.useEffect(() => {
+    setName(employees.name);
+    setAddress(employees.address);
+    setBirthday(new Date(employees.day_of_birth))
+  }, []);
 
   return (
-    <div >
+    <div>
       <form onSubmit={handleSubmit}>
         <div className="modal">
           <a className="close" onClick={close}>
@@ -52,7 +58,6 @@ export default ({ close, getEmployees }) => {
           <hr></hr>
           <div className="content">
             <TextField
-              value={name}
               autoFocus
               margin="dense"
               id="name"
@@ -60,22 +65,15 @@ export default ({ close, getEmployees }) => {
               type="text"
               fullWidth
               variant="standard"
-              onChange={(event) => {
-                setName(event.target.value);
-                console.log(name);
-              }}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-            <TextField
-              id="date"
-              type="date"
-              variant="standard"
-              fullWidth
-              style={{ paddingTop: "15px" }}
-              value={day_of_birth}
-              onChange={(event) => {
-                setBirthday(event.target.value);
-                console.log(name);
-              }}
+            <DateTimePicker 
+                onChange={setBirthday} 
+                value={day_of_birth} 
+                renderInput={(props) => <TextField {...props} />}  
+                format="dd MM yyyy"
+                style={{ width: "400px" }}
             />
             <TextField
               margin="dense"
@@ -85,10 +83,7 @@ export default ({ close, getEmployees }) => {
               fullWidth
               variant="standard"
               value={address}
-              onChange={(event) => {
-                setAddress(event.target.value);
-                console.log(name);
-              }}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
           <Button type="submit">Submit</Button>

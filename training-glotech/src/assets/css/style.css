@@ -68,3 +68,14 @@ hr{
   border-radius: 18px;
   border: 1px solid #cfcece;
 }
+
+::ng-deep .react-datetime-picker__wrapper{
+  border: unset;
+  border-bottom: 1px solid #928C8C;
+  width: 100%;
+}
+.react-datetime-picker__wrapper{
+  border: unset;
+  border-bottom: 1px solid #928C8C !important;
+  width: 100% !important;
+}
